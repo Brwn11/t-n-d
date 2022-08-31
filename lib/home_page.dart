@@ -50,22 +50,70 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          "assets/images/tower.png",
+                        Card(
+                          elevation: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              "assets/images/pumpkin.png",
+                            ),
+                          ),
                         ),
-                        Image.asset(
-                          "assets/images/tower.png",
+                        Card(
+                          elevation: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              "assets/images/coffee.png",
+                            ),
+                          ),
                         ),
-                        Image.asset(
-                          "assets/images/tower.png",
+                        Card(
+                          elevation: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              "assets/images/bread.png",
+                            ),
+                          ),
                         ),
-                        Image.asset(
-                          "assets/images/tower.png",
+                        Card(
+                          elevation: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              "assets/images/cupcake.png",
+                            ),
+                          ),
                         ),
-                        Image.asset(
-                          "assets/images/tower.png",
+                        Card(
+                          elevation: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              "assets/images/french_fries.png",
+                            ),
+                          ),
+                        ),
+                        Card(
+                          elevation: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              "assets/images/ice_cream.png",
+                            ),
+                          ),
+                        ),
+                        Card(
+                          elevation: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              "assets/images/raspberry.png",
+                            ),
+                          ),
                         ),
                       ],
                     ),
