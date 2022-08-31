@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
               decoration: BoxDecoration(
                 // color: Colors.black,
                 border: Border.all(
-                  color: Colors.red,
+                  color: Colors.black,
                 ),
               ),
               width: MediaQuery.of(context).size.width,
@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                     decoration: BoxDecoration(
                       // color: Colors.red,
                       border: Border.all(
-                        color: Colors.red,
+                        color: Colors.black,
                       ),
                     ),
                     child: Column(
@@ -75,14 +75,14 @@ class _HomePageState extends State<HomePage> {
                       width: double.infinity,
                       height: double.infinity,
                       decoration: const BoxDecoration(
-                        color: Colors.blue,
+                        color: Colors.white,
                       ),
                       child: Row(
                         children: [
                           Container(
                             decoration: const BoxDecoration(
-                              color: Colors.yellow,
-                            ),
+                                // color: Colors.yellow,
+                                ),
                             width: MediaQuery.of(context).size.width / 2,
                             height: double.infinity,
                             child: Column(
