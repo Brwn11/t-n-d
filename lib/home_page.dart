@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter/material.dart' show BoxDecoration, BoxShadow;
 import 'package:touch_n_dine/constants.dart';
+import "package:logger/logger.dart";
+
+Logger logger = Logger();
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,6 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool checkboxValue = false;
+  int selectedCategoryIndex = 0;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -52,37 +56,59 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Card(
-                          elevation: 10,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.asset(
-                              "assets/images/pumpkin.png",
+                        // GestureDetector(
+                        //   onTap: () {},
+                        //   child: Card(
+                        //     elevation: 10,
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.all(8.0),
+                        //       child: Image.asset(
+                        //         "assets/images/pumpkin.png",
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedCategoryIndex = 0;
+                            });
+                            logger.i(selectedCategoryIndex);
+                          },
+                          child: Card(
+                            elevation: selectedCategoryIndex == 0 ? 20 : 10,
+                            child: Padding(
+                              padding: EdgeInsets.all(
+                                  selectedCategoryIndex == 0 ? 16.0 : 6.0),
+                              child: Image.asset(
+                                "assets/images/coffee.png",
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedCategoryIndex = 1;
+                            });
+                            logger.i(selectedCategoryIndex);
+                          },
+                          child: Card(
+                            elevation: selectedCategoryIndex == 0 ? 20 : 10,
+                            child: Padding(
+                              padding: EdgeInsets.all(
+                                selectedCategoryIndex == 1 ? 16 : 6,
+                              ),
+                              child: Image.asset(
+                                "assets/images/bread.png",
+                              ),
                             ),
                           ),
                         ),
                         Card(
                           elevation: 10,
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.asset(
-                              "assets/images/coffee.png",
-                            ),
-                          ),
-                        ),
-                        Card(
-                          elevation: 10,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.asset(
-                              "assets/images/bread.png",
-                            ),
-                          ),
-                        ),
-                        Card(
-                          elevation: 10,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(6.0),
                             child: Image.asset(
                               "assets/images/cupcake.png",
                             ),
@@ -91,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                         Card(
                           elevation: 10,
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(6.0),
                             child: Image.asset(
                               "assets/images/french_fries.png",
                             ),
@@ -100,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                         Card(
                           elevation: 10,
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(6.0),
                             child: Image.asset(
                               "assets/images/ice_cream.png",
                             ),
@@ -109,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                         Card(
                           elevation: 10,
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(6.0),
                             child: Image.asset(
                               "assets/images/raspberry.png",
                             ),
@@ -165,440 +191,446 @@ class _HomePageState extends State<HomePage> {
                                         borderRadius: BorderRadius.circular(
                                           10,
                                         ),
-                                        image: const DecorationImage(
+                                        image: DecorationImage(
                                           fit: BoxFit.cover,
                                           opacity: 0.9,
                                           image: AssetImage(
-                                            "assets/images/food.jpg",
+                                            selectedCategoryIndex == 0
+                                                ? "assets/images/coffee_1.jpg"
+                                                : "assets/images/bread_1.jpg",
                                           ),
                                         ),
                                       ),
                                       child: Stack(
                                         children: [
-                                          const Positioned(
+                                          Positioned(
                                             bottom: 30,
                                             left: 10,
                                             child: Text(
-                                              "Pasta",
-                                              style: TextStyle(
+                                              selectedCategoryIndex == 0
+                                                  ? "Coffee"
+                                                  : "Bread",
+                                              style: const TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 19,
                                               ),
                                             ),
                                           ),
-                                          const Positioned(
+                                          Positioned(
                                             bottom: 15,
                                             left: 10,
                                             child: Text(
-                                              "Rs : 120",
-                                              style: TextStyle(
+                                              selectedCategoryIndex == 0
+                                                  ? "Rs : 50"
+                                                  : "Rs : 80",
+                                              style: const TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 13,
                                               ),
                                             ),
                                           ),
-                                          Positioned(
-                                            bottom: 5,
-                                            right: 10,
-                                            child: GestureDetector(
-                                              onTap: () {},
-                                              child: Container(
-                                                width: 90,
-                                                height: 20,
-                                                // margin: const EdgeInsets.all(
-                                                //   5,
-                                                // ),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.red,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    10,
-                                                  ),
-                                                ),
-                                                child: const Center(
-                                                  child: Text(
-                                                    "Add To Cart",
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 170,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(
-                                          10,
-                                        ),
-                                        image: const DecorationImage(
-                                          fit: BoxFit.cover,
-                                          opacity: 0.9,
-                                          image: AssetImage(
-                                            "assets/images/food.jpg",
-                                          ),
-                                        ),
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          const Positioned(
-                                            bottom: 30,
-                                            left: 10,
-                                            child: Text(
-                                              "Pasta",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 19,
-                                              ),
-                                            ),
-                                          ),
-                                          const Positioned(
-                                            bottom: 15,
-                                            left: 10,
-                                            child: Text(
-                                              "Rs : 120",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 13,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            bottom: 5,
-                                            right: 10,
-                                            child: GestureDetector(
-                                              onTap: () {},
-                                              child: Container(
-                                                width: 90,
-                                                height: 20,
-                                                // margin: const EdgeInsets.all(
-                                                //   5,
-                                                // ),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.red,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    10,
-                                                  ),
-                                                ),
-                                                child: const Center(
-                                                  child: Text(
-                                                    "Add To Cart",
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                sizedBox20(),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      width: 170,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(
-                                          10,
-                                        ),
-                                        image: const DecorationImage(
-                                          fit: BoxFit.cover,
-                                          opacity: 0.9,
-                                          image: AssetImage(
-                                            "assets/images/food.jpg",
-                                          ),
-                                        ),
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          const Positioned(
-                                            bottom: 30,
-                                            left: 10,
-                                            child: Text(
-                                              "Pasta",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 19,
-                                              ),
-                                            ),
-                                          ),
-                                          const Positioned(
-                                            bottom: 15,
-                                            left: 10,
-                                            child: Text(
-                                              "Rs : 120",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 13,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            bottom: 5,
-                                            right: 10,
-                                            child: GestureDetector(
-                                              onTap: () {},
-                                              child: Container(
-                                                width: 90,
-                                                height: 20,
-                                                // margin: const EdgeInsets.all(
-                                                //   5,
-                                                // ),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.red,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    10,
-                                                  ),
-                                                ),
-                                                child: const Center(
-                                                  child: Text(
-                                                    "Add To Cart",
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 170,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(
-                                          10,
-                                        ),
-                                        image: const DecorationImage(
-                                          fit: BoxFit.cover,
-                                          opacity: 0.9,
-                                          image: AssetImage(
-                                            "assets/images/food.jpg",
-                                          ),
-                                        ),
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          const Positioned(
-                                            bottom: 30,
-                                            left: 10,
-                                            child: Text(
-                                              "Pasta",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 19,
-                                              ),
-                                            ),
-                                          ),
-                                          const Positioned(
-                                            bottom: 15,
-                                            left: 10,
-                                            child: Text(
-                                              "Rs : 120",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 13,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            bottom: 5,
-                                            right: 10,
-                                            child: GestureDetector(
-                                              onTap: () {},
-                                              child: Container(
-                                                width: 90,
-                                                height: 20,
-                                                // margin: const EdgeInsets.all(
-                                                //   5,
-                                                // ),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.red,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    10,
-                                                  ),
-                                                ),
-                                                child: const Center(
-                                                  child: Text(
-                                                    "Add To Cart",
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          )
+                                          //           Positioned(
+                                          //             bottom: 5,
+                                          //             right: 10,
+                                          //             child: GestureDetector(
+                                          //               onTap: () {},
+                                          //               child: Container(
+                                          //                 width: 90,
+                                          //                 height: 20,
+                                          //                 // margin: const EdgeInsets.all(
+                                          //                 //   5,
+                                          //                 // ),
+                                          //                 decoration: BoxDecoration(
+                                          //                   color: Colors.red,
+                                          //                   borderRadius:
+                                          //                       BorderRadius.circular(
+                                          //                     10,
+                                          //                   ),
+                                          //                 ),
+                                          //                 child: const Center(
+                                          //                   child: Text(
+                                          //                     "Add To Cart",
+                                          //                   ),
+                                          //                 ),
+                                          //               ),
+                                          //             ),
+                                          //           )
+                                          //         ],
+                                          //       ),
+                                          //     ),
+                                          //     Container(
+                                          //       width: 170,
+                                          //       height: 150,
+                                          //       decoration: BoxDecoration(
+                                          //         color: Colors.white,
+                                          //         borderRadius: BorderRadius.circular(
+                                          //           10,
+                                          //         ),
+                                          //         image: const DecorationImage(
+                                          //           fit: BoxFit.cover,
+                                          //           opacity: 0.9,
+                                          //           image: AssetImage(
+                                          //             "assets/images/food.jpg",
+                                          //           ),
+                                          //         ),
+                                          //       ),
+                                          //       child: Stack(
+                                          //         children: [
+                                          //           const Positioned(
+                                          //             bottom: 30,
+                                          //             left: 10,
+                                          //             child: Text(
+                                          //               "Pasta",
+                                          //               style: TextStyle(
+                                          //                 color: Colors.white,
+                                          //                 fontWeight: FontWeight.bold,
+                                          //                 fontSize: 19,
+                                          //               ),
+                                          //             ),
+                                          //           ),
+                                          //           const Positioned(
+                                          //             bottom: 15,
+                                          //             left: 10,
+                                          //             child: Text(
+                                          //               "Rs : 120",
+                                          //               style: TextStyle(
+                                          //                 color: Colors.white,
+                                          //                 fontWeight: FontWeight.bold,
+                                          //                 fontSize: 13,
+                                          //               ),
+                                          //             ),
+                                          //           ),
+                                          //           Positioned(
+                                          //             bottom: 5,
+                                          //             right: 10,
+                                          //             child: GestureDetector(
+                                          //               onTap: () {},
+                                          //               child: Container(
+                                          //                 width: 90,
+                                          //                 height: 20,
+                                          //                 // margin: const EdgeInsets.all(
+                                          //                 //   5,
+                                          //                 // ),
+                                          //                 decoration: BoxDecoration(
+                                          //                   color: Colors.red,
+                                          //                   borderRadius:
+                                          //                       BorderRadius.circular(
+                                          //                     10,
+                                          //                   ),
+                                          //                 ),
+                                          //                 child: const Center(
+                                          //                   child: Text(
+                                          //                     "Add To Cart",
+                                          //                   ),
+                                          //                 ),
+                                          //               ),
+                                          //             ),
+                                          //           )
                                         ],
                                       ),
                                     ),
                                   ],
                                 ),
                                 sizedBox20(),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      width: 170,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(
-                                          10,
-                                        ),
-                                        image: const DecorationImage(
-                                          fit: BoxFit.cover,
-                                          opacity: 0.9,
-                                          image: AssetImage(
-                                            "assets/images/food.jpg",
-                                          ),
-                                        ),
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          const Positioned(
-                                            bottom: 30,
-                                            left: 10,
-                                            child: Text(
-                                              "Pasta",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 19,
-                                              ),
-                                            ),
-                                          ),
-                                          const Positioned(
-                                            bottom: 15,
-                                            left: 10,
-                                            child: Text(
-                                              "Rs : 120",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 13,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            bottom: 5,
-                                            right: 10,
-                                            child: GestureDetector(
-                                              onTap: () {},
-                                              child: Container(
-                                                width: 90,
-                                                height: 20,
-                                                // margin: const EdgeInsets.all(
-                                                //   5,
-                                                // ),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.red,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    10,
-                                                  ),
-                                                ),
-                                                child: const Center(
-                                                  child: Text(
-                                                    "Add To Cart",
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 170,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(
-                                          10,
-                                        ),
-                                        image: const DecorationImage(
-                                          fit: BoxFit.cover,
-                                          opacity: 0.9,
-                                          image: AssetImage(
-                                            "assets/images/food.jpg",
-                                          ),
-                                        ),
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          const Positioned(
-                                            bottom: 30,
-                                            left: 10,
-                                            child: Text(
-                                              "Pasta",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 19,
-                                              ),
-                                            ),
-                                          ),
-                                          const Positioned(
-                                            bottom: 15,
-                                            left: 10,
-                                            child: Text(
-                                              "Rs : 120",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 13,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            bottom: 5,
-                                            right: 10,
-                                            child: GestureDetector(
-                                              onTap: () {},
-                                              child: Container(
-                                                width: 90,
-                                                height: 20,
-                                                // margin: const EdgeInsets.all(
-                                                //   5,
-                                                // ),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.red,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    10,
-                                                  ),
-                                                ),
-                                                child: const Center(
-                                                  child: Text(
-                                                    "Add To Cart",
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                // Row(
+                                //   mainAxisAlignment:
+                                //       MainAxisAlignment.spaceEvenly,
+                                //   children: [
+                                //     Container(
+                                //       width: 170,
+                                //       height: 150,
+                                //       decoration: BoxDecoration(
+                                //         color: Colors.white,
+                                //         borderRadius: BorderRadius.circular(
+                                //           10,
+                                //         ),
+                                //         image: const DecorationImage(
+                                //           fit: BoxFit.cover,
+                                //           opacity: 0.9,
+                                //           image: AssetImage(
+                                //             "assets/images/food.jpg",
+                                //           ),
+                                //         ),
+                                //       ),
+                                //       child: Stack(
+                                //         children: [
+                                //           const Positioned(
+                                //             bottom: 30,
+                                //             left: 10,
+                                //             child: Text(
+                                //               "Pasta",
+                                //               style: TextStyle(
+                                //                 color: Colors.white,
+                                //                 fontWeight: FontWeight.bold,
+                                //                 fontSize: 19,
+                                //               ),
+                                //             ),
+                                //           ),
+                                //           const Positioned(
+                                //             bottom: 15,
+                                //             left: 10,
+                                //             child: Text(
+                                //               "Rs : 120",
+                                //               style: TextStyle(
+                                //                 color: Colors.white,
+                                //                 fontWeight: FontWeight.bold,
+                                //                 fontSize: 13,
+                                //               ),
+                                //             ),
+                                //           ),
+                                //           Positioned(
+                                //             bottom: 5,
+                                //             right: 10,
+                                //             child: GestureDetector(
+                                //               onTap: () {},
+                                //               child: Container(
+                                //                 width: 90,
+                                //                 height: 20,
+                                //                 // margin: const EdgeInsets.all(
+                                //                 //   5,
+                                //                 // ),
+                                //                 decoration: BoxDecoration(
+                                //                   color: Colors.red,
+                                //                   borderRadius:
+                                //                       BorderRadius.circular(
+                                //                     10,
+                                //                   ),
+                                //                 ),
+                                //                 child: const Center(
+                                //                   child: Text(
+                                //                     "Add To Cart",
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //             ),
+                                //           )
+                                //         ],
+                                //       ),
+                                //     ),
+                                //     Container(
+                                //       width: 170,
+                                //       height: 150,
+                                //       decoration: BoxDecoration(
+                                //         color: Colors.white,
+                                //         borderRadius: BorderRadius.circular(
+                                //           10,
+                                //         ),
+                                //         image: const DecorationImage(
+                                //           fit: BoxFit.cover,
+                                //           opacity: 0.9,
+                                //           image: AssetImage(
+                                //             "assets/images/food.jpg",
+                                //           ),
+                                //         ),
+                                //       ),
+                                //       child: Stack(
+                                //         children: [
+                                //           const Positioned(
+                                //             bottom: 30,
+                                //             left: 10,
+                                //             child: Text(
+                                //               "Pasta",
+                                //               style: TextStyle(
+                                //                 color: Colors.white,
+                                //                 fontWeight: FontWeight.bold,
+                                //                 fontSize: 19,
+                                //               ),
+                                //             ),
+                                //           ),
+                                //           const Positioned(
+                                //             bottom: 15,
+                                //             left: 10,
+                                //             child: Text(
+                                //               "Rs : 120",
+                                //               style: TextStyle(
+                                //                 color: Colors.white,
+                                //                 fontWeight: FontWeight.bold,
+                                //                 fontSize: 13,
+                                //               ),
+                                //             ),
+                                //           ),
+                                //           Positioned(
+                                //             bottom: 5,
+                                //             right: 10,
+                                //             child: GestureDetector(
+                                //               onTap: () {},
+                                //               child: Container(
+                                //                 width: 90,
+                                //                 height: 20,
+                                //                 // margin: const EdgeInsets.all(
+                                //                 //   5,
+                                //                 // ),
+                                //                 decoration: BoxDecoration(
+                                //                   color: Colors.red,
+                                //                   borderRadius:
+                                //                       BorderRadius.circular(
+                                //                     10,
+                                //                   ),
+                                //                 ),
+                                //                 child: const Center(
+                                //                   child: Text(
+                                //                     "Add To Cart",
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //             ),
+                                //           )
+                                //         ],
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
+                                // sizedBox20(),
+                                // Row(
+                                //   mainAxisAlignment:
+                                //       MainAxisAlignment.spaceEvenly,
+                                //   children: [
+                                //     Container(
+                                //       width: 170,
+                                //       height: 150,
+                                //       decoration: BoxDecoration(
+                                //         color: Colors.white,
+                                //         borderRadius: BorderRadius.circular(
+                                //           10,
+                                //         ),
+                                //         image: const DecorationImage(
+                                //           fit: BoxFit.cover,
+                                //           opacity: 0.9,
+                                //           image: AssetImage(
+                                //             "assets/images/food.jpg",
+                                //           ),
+                                //         ),
+                                //       ),
+                                //       child: Stack(
+                                //         children: [
+                                //           const Positioned(
+                                //             bottom: 30,
+                                //             left: 10,
+                                //             child: Text(
+                                //               "Pasta",
+                                //               style: TextStyle(
+                                //                 color: Colors.white,
+                                //                 fontWeight: FontWeight.bold,
+                                //                 fontSize: 19,
+                                //               ),
+                                //             ),
+                                //           ),
+                                //           const Positioned(
+                                //             bottom: 15,
+                                //             left: 10,
+                                //             child: Text(
+                                //               "Rs : 120",
+                                //               style: TextStyle(
+                                //                 color: Colors.white,
+                                //                 fontWeight: FontWeight.bold,
+                                //                 fontSize: 13,
+                                //               ),
+                                //             ),
+                                //           ),
+                                //           Positioned(
+                                //             bottom: 5,
+                                //             right: 10,
+                                //             child: GestureDetector(
+                                //               onTap: () {},
+                                //               child: Container(
+                                //                 width: 90,
+                                //                 height: 20,
+                                //                 // margin: const EdgeInsets.all(
+                                //                 //   5,
+                                //                 // ),
+                                //                 decoration: BoxDecoration(
+                                //                   color: Colors.red,
+                                //                   borderRadius:
+                                //                       BorderRadius.circular(
+                                //                     10,
+                                //                   ),
+                                //                 ),
+                                //                 child: const Center(
+                                //                   child: Text(
+                                //                     "Add To Cart",
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //             ),
+                                //           )
+                                //         ],
+                                //       ),
+                                //     ),
+                                //     Container(
+                                //       width: 170,
+                                //       height: 150,
+                                //       decoration: BoxDecoration(
+                                //         color: Colors.white,
+                                //         borderRadius: BorderRadius.circular(
+                                //           10,
+                                //         ),
+                                //         image: const DecorationImage(
+                                //           fit: BoxFit.cover,
+                                //           opacity: 0.9,
+                                //           image: AssetImage(
+                                //             "assets/images/food.jpg",
+                                //           ),
+                                //         ),
+                                //       ),
+                                //       child: Stack(
+                                //         children: [
+                                //           const Positioned(
+                                //             bottom: 30,
+                                //             left: 10,
+                                //             child: Text(
+                                //               "Pasta",
+                                //               style: TextStyle(
+                                //                 color: Colors.white,
+                                //                 fontWeight: FontWeight.bold,
+                                //                 fontSize: 19,
+                                //               ),
+                                //             ),
+                                //           ),
+                                //           const Positioned(
+                                //             bottom: 15,
+                                //             left: 10,
+                                //             child: Text(
+                                //               "Rs : 120",
+                                //               style: TextStyle(
+                                //                 color: Colors.white,
+                                //                 fontWeight: FontWeight.bold,
+                                //                 fontSize: 13,
+                                //               ),
+                                //             ),
+                                //           ),
+                                //           Positioned(
+                                //             bottom: 5,
+                                //             right: 10,
+                                //             child: GestureDetector(
+                                //               onTap: () {},
+                                //               child: Container(
+                                //                 width: 90,
+                                //                 height: 20,
+                                //                 // margin: const EdgeInsets.all(
+                                //                 //   5,
+                                //                 // ),
+                                //                 decoration: BoxDecoration(
+                                //                   color: Colors.red,
+                                //                   borderRadius:
+                                //                       BorderRadius.circular(
+                                //                     10,
+                                //                   ),
+                                //                 ),
+                                //                 child: const Center(
+                                //                   child: Text(
+                                //                     "Add To Cart",
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //             ),
+                                //           )
+                                //         ],
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
                               ],
                             ),
                           ),
