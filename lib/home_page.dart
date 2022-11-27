@@ -8,7 +8,8 @@ import "package:logger/logger.dart";
 import "package:http/http.dart" as http;
 
 Logger logger = Logger();
-String _url = "http://10.0.2.2:3000/ecommerce/api/coffee/";
+String _coffeeUrl = "http://10.0.2.2:3000/ecommerce/api/coffee/";
+String _itemsUrl = "http://10.0.2.2:3000/ecommerce/api/items/";
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,21 +19,41 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  dynamic coffeeResponse;
+  dynamic itemsResponse;
   bool checkboxValue = false;
   int selectedCategoryIndex = 0;
-  int selectedItemIndex = 0;
-
-  Future getCoffeeApi() async {
+  int selectedItemIndex = 1;
+  Future getItemsApi() async {
     final response = await http.get(
-      Uri.parse(_url),
+      Uri.parse(_itemsUrl),
     );
     if (response.statusCode == 200) {
       logger.i(response.body);
       var convertedDataJson = jsonDecode(response.body);
       logger.i(convertedDataJson);
-
+      itemsResponse = convertedDataJson;
       return convertedDataJson;
     }
+  }
+
+  Future getCoffeeApi() async {
+    final response = await http.get(
+      Uri.parse(_coffeeUrl),
+    );
+    if (response.statusCode == 200) {
+      logger.i(response.body);
+      var convertedDataJson = jsonDecode(response.body);
+      logger.i(convertedDataJson);
+      coffeeResponse = convertedDataJson;
+      return convertedDataJson;
+    }
+  }
+
+  getApis() async {
+    var res = await getCoffeeApi();
+    await getItemsApi();
+    return res;
   }
 
   @override
@@ -47,7 +68,7 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: FutureBuilder(
-          future: getCoffeeApi(),
+          future: getApis(),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
               logger.e("Snapshot Has No Data");
@@ -93,95 +114,123 @@ class _HomePageState extends State<HomePage> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: itemsResponse.length,
+                                itemBuilder: (context, i) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedItemIndex =
+                                            itemsResponse[i]["index"];
+                                      });
+                                      logger.i(selectedItemIndex);
+                                    },
+                                    child: Card(
+                                      color: selectedItemIndex ==
+                                              itemsResponse[i]["index"]
+                                          ? Colors.red
+                                          : Colors.green,
+                                      elevation: selectedItemIndex ==
+                                              itemsResponse[i]["index"]
+                                          ? 20
+                                          : 10,
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: selectedItemIndex ==
+                                                  itemsResponse[i]["index"]
+                                              ? 16.0
+                                              : 6.0,
+                                          // vertical: selectedItemIndex ==
+                                          //         itemsResponse[i]["index"]
+                                          //     ? 16.0
+                                          //     : 6.0,
+                                        ),
+                                        child: Image.asset(
+                                          "assets/images/coffee.png",
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                               // GestureDetector(
-                              //   onTap: () {},
+                              //   onTap: () {
+                              //     setState(() {
+                              //       selectedCategoryIndex = 0;
+                              //     });
+                              //     logger.i(selectedCategoryIndex);
+                              //   },
                               //   child: Card(
-                              //     elevation: 10,
+                              //     elevation:
+                              //         selectedCategoryIndex == 0 ? 20 : 10,
                               //     child: Padding(
-                              //       padding: const EdgeInsets.all(8.0),
+                              //       padding: EdgeInsets.all(
+                              //           selectedCategoryIndex == 0
+                              //               ? 16.0
+                              //               : 6.0),
                               //       child: Image.asset(
-                              //         "assets/images/pumpkin.png",
+                              //         "assets/images/coffee.png",
                               //       ),
                               //     ),
                               //   ),
                               // ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    selectedCategoryIndex = 0;
-                                  });
-                                  logger.i(selectedCategoryIndex);
-                                },
-                                child: Card(
-                                  elevation:
-                                      selectedCategoryIndex == 0 ? 20 : 10,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(
-                                        selectedCategoryIndex == 0
-                                            ? 16.0
-                                            : 6.0),
-                                    child: Image.asset(
-                                      "assets/images/coffee.png",
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    selectedCategoryIndex = 1;
-                                  });
-                                  logger.i(selectedCategoryIndex);
-                                },
-                                child: Card(
-                                  elevation:
-                                      selectedCategoryIndex == 0 ? 20 : 10,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(
-                                      selectedCategoryIndex == 1 ? 16 : 6,
-                                    ),
-                                    child: Image.asset(
-                                      "assets/images/bread.png",
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                elevation: 10,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(6.0),
-                                  child: Image.asset(
-                                    "assets/images/cupcake.png",
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                elevation: 10,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(6.0),
-                                  child: Image.asset(
-                                    "assets/images/french_fries.png",
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                elevation: 10,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(6.0),
-                                  child: Image.asset(
-                                    "assets/images/ice_cream.png",
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                elevation: 10,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(6.0),
-                                  child: Image.asset(
-                                    "assets/images/raspberry.png",
-                                  ),
-                                ),
-                              ),
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     setState(() {
+                              //       selectedCategoryIndex = 1;
+                              //     });
+                              //     logger.i(selectedCategoryIndex);
+                              //   },
+                              //   child: Card(
+                              //     elevation:
+                              //         selectedCategoryIndex == 0 ? 20 : 10,
+                              //     child: Padding(
+                              //       padding: EdgeInsets.all(
+                              //         selectedCategoryIndex == 1 ? 16 : 6,
+                              //       ),
+                              //       child: Image.asset(
+                              //         "assets/images/bread.png",
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                              // Card(
+                              //   elevation: 10,
+                              //   child: Padding(
+                              //     padding: const EdgeInsets.all(6.0),
+                              //     child: Image.asset(
+                              //       "assets/images/cupcake.png",
+                              //     ),
+                              //   ),
+                              // ),
+                              // Card(
+                              //   elevation: 10,
+                              //   child: Padding(
+                              //     padding: const EdgeInsets.all(6.0),
+                              //     child: Image.asset(
+                              //       "assets/images/french_fries.png",
+                              //     ),
+                              //   ),
+                              // ),
+                              // Card(
+                              //   elevation: 10,
+                              //   child: Padding(
+                              //     padding: const EdgeInsets.all(6.0),
+                              //     child: Image.asset(
+                              //       "assets/images/ice_cream.png",
+                              //     ),
+                              //   ),
+                              // ),
+                              // Card(
+                              //   elevation: 10,
+                              //   child: Padding(
+                              //     padding: const EdgeInsets.all(6.0),
+                              //     child: Image.asset(
+                              //       "assets/images/raspberry.png",
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
@@ -256,7 +305,7 @@ class _HomePageState extends State<HomePage> {
                                                     left: 10,
                                                     child: Text(
                                                       selectedCategoryIndex == 0
-                                                          ? snapshot.data[0]
+                                                          ? coffeeResponse[0]
                                                               ["name"]
                                                           : "Bread",
                                                       style: const TextStyle(
@@ -272,7 +321,7 @@ class _HomePageState extends State<HomePage> {
                                                     left: 10,
                                                     child: Text(
                                                       selectedCategoryIndex == 0
-                                                          ? 'Rs :${snapshot.data[0]["price"]}'
+                                                          ? 'Rs :${coffeeResponse[0]["price"]}'
                                                           : "Rs : 80",
                                                       style: const TextStyle(
                                                         color: Colors.white,
