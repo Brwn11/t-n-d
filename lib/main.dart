@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import "package:get/get.dart";
 import 'package:touch_n_dine/home_page.dart';
+import 'package:touch_n_dine/login.dart';
 
 void main() {
   runApp(
@@ -17,8 +18,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       getPages: [
         GetPage(
-          name: "/",
+          name: "/home",
           page: () => const HomePage(),
+        ),
+         GetPage(
+          name: "/",
+          page: () => const LoginPage(),
         ),
       ],
       initialRoute: "/",
