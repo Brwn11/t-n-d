@@ -17,6 +17,7 @@ dependencies:
   flutter_inset_box_shadow: ^1.0.8
   logger: ^1.1.0
   http: ^0.13.5
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:
