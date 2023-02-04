@@ -1,9 +1,46 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 import 'constants.dart';
+import 'get_storage.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  Future loginApi({
+    required email,
+    required password,
+  }) async {
+    final response = await http.post(
+      Uri.parse(
+        "http://192.168.1.3:3000/ecommerce/api/auth/",
+      ),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(
+        <String, dynamic>{
+          "email": "maya@gmail.com",
+          "password": "1234",
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      final convertedData = jsonDecode(response.body);
+
+      return convertedData;
+    } else {
+      throw Exception('Failed to load album');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +74,12 @@ class LoginPage extends StatelessWidget {
                       10,
                     ),
                     shadowColor: Colors.black,
-                    child: const TextField(
+                    child: TextField(
                       keyboardType: TextInputType.name,
-                      // controller: _mobileNumberController,
+                      controller: _emailController,
                       cursorColor: Colors.red,
                       textAlignVertical: TextAlignVertical.center,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         prefixIcon: Icon(
                           Icons.person,
                           color: Colors.grey,
@@ -66,12 +103,12 @@ class LoginPage extends StatelessWidget {
                       10,
                     ),
                     shadowColor: Colors.black,
-                    child: const TextField(
+                    child: TextField(
                       keyboardType: TextInputType.name,
-                      // controller: _passwordController,
+                      controller: _passwordController,
                       cursorColor: Colors.red,
                       textAlignVertical: TextAlignVertical.center,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         prefixIcon: Icon(
                           Icons.mail,
                           color: Colors.grey,
@@ -135,7 +172,21 @@ class LoginPage extends StatelessWidget {
                     elevation: 10,
                     backgroundColor: Colors.red,
                   ),
-                  onPressed: () async {},
+                  onPressed: () async {
+                    var response = await loginApi(
+                      email: _emailController.text.trim(),
+                      password: _passwordController.text.trim(),
+                    );
+                    logger.i(response);
+                    if (response.status = true) {
+                      box.write("position", response.position);
+                      box.write("user_name", response.user["name"]);
+                      box.write("user_email", response.user["email"]);
+                      box.write("user_id", response.user["_id"]);
+                    } else {
+                      logger.i("error");
+                    }
+                  },
                   child: const Text(
                     "Sign In",
                     style: TextStyle(
@@ -188,3 +239,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+
+//   @override
+//   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+// }
