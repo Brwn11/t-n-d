@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'constants.dart';
 import 'get_storage.dart';
@@ -21,21 +21,20 @@ class _LoginPageState extends State<LoginPage> {
   }) async {
     final response = await http.post(
       Uri.parse(
-        "http://192.168.1.3:3000/ecommerce/api/auth/",
+        "http://192.168.1.5:3000/ecommerce/api/auth/",
       ),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(
         <String, dynamic>{
-          "email": "maya@gmail.com",
+          "email": "anu@gmail.com",
           "password": "1234",
         },
       ),
     );
     if (response.statusCode == 200) {
       final convertedData = jsonDecode(response.body);
-
       return convertedData;
     } else {
       throw Exception('Failed to load album');
@@ -178,11 +177,18 @@ class _LoginPageState extends State<LoginPage> {
                       password: _passwordController.text.trim(),
                     );
                     logger.i(response);
-                    if (response.status = true) {
-                      box.write("position", response.position);
-                      box.write("user_name", response.user["name"]);
-                      box.write("user_email", response.user["email"]);
-                      box.write("user_id", response.user["_id"]);
+                    if (response["status"] = true) {
+                      box.write("position", response["position"]);
+                      box.write("user_name", response["user"]["name"]);
+                      box.write("user_email", response["user"]["email"]);
+                      box.write("user_id", response["user"]["_id"]);
+                      if (response["position"] == "AD") {
+                      } else if (response["position"] == "BA") {
+                        Get.offNamed("/branch_admin");
+                      } else if (response["position"] == "RA") {
+                      } else {
+                        logger.i("error");
+                      }
                     } else {
                       logger.i("error");
                     }
