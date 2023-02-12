@@ -39,8 +39,8 @@ class MyApp extends StatelessWidget {
           page: () => const BranchAdmin(),
         ),
       ],
-      // initialRoute: "/",
-      initialRoute: "/branch_admin",
+      initialRoute: "/",
+      // initialRoute: "/branch_admin",
     );
   }
 }
