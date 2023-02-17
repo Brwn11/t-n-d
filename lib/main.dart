@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import "package:get/get.dart";
 import 'package:get_storage/get_storage.dart';
+import 'package:touch_n_dine/admin_home.dart';
 import 'package:touch_n_dine/home_page.dart';
 import 'package:touch_n_dine/login.dart';
 
@@ -37,6 +38,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/branch_admin",
           page: () => const BranchAdmin(),
+        ),
+         GetPage(
+          name: "/admin_home",
+          page: () => const AdminHomePage(),
         ),
       ],
       initialRoute: "/",

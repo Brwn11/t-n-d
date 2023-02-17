@@ -49,11 +49,12 @@ class BranchAdmin extends StatefulWidget {
 class _BranchAdminState extends State<BranchAdmin> {
   // ignore: non_constant_identifier_names
   dynamic branch_response;
+  dynamic id;
 
   Future getBranches() async {
     final response = await http.get(
       Uri.parse(
-        "http://192.168.1.5:3000/ecommerce/api/branch",
+        "http://192.168.1.5:3000/ecommerce/api/branch/$id",
       ),
     );
     if (response.statusCode == 200) {
@@ -70,6 +71,7 @@ class _BranchAdminState extends State<BranchAdmin> {
   void initState() {
     // getBranches();
     super.initState();
+    id = box.read("user_id");
   }
 
   @override
@@ -142,10 +144,10 @@ class _BranchAdminState extends State<BranchAdmin> {
                               child: Column(
                                 children: [
                                   Text(
-                                    snapshot.data["branches"][i]["name"],
+                                    snapshot.data["branches"][i]["branch_name"],
                                   ),
                                   Text(
-                                    snapshot.data["branches"][i]["email"],
+                                    snapshot.data["branches"][i]["branch_email"],
                                   ),
                                 ],
                               ),

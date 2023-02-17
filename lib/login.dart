@@ -183,6 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                       box.write("user_email", response["user"]["email"]);
                       box.write("user_id", response["user"]["_id"]);
                       if (response["position"] == "AD") {
+                        Get.offNamed("/admin_home");
                       } else if (response["position"] == "BA") {
                         Get.offNamed("/branch_admin");
                       } else if (response["position"] == "RA") {
@@ -236,7 +237,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
