@@ -44,8 +44,8 @@ class MyApp extends StatelessWidget {
           page: () => const AdminHomePage(),
         ),
       ],
-      initialRoute: "/",
-      // initialRoute: "/branch_admin",
+      // initialRoute: "/",
+      initialRoute: "/admin_home",
     );
   }
 }

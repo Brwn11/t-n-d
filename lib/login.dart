@@ -28,13 +28,14 @@ class _LoginPageState extends State<LoginPage> {
       },
       body: jsonEncode(
         <String, dynamic>{
-          "email": "anu@gmail.com",
+          "email": "brown@gmail.com",
           "password": "1234",
         },
       ),
     );
     if (response.statusCode == 200) {
       final convertedData = jsonDecode(response.body);
+
       return convertedData;
     } else {
       throw Exception('Failed to load album');
@@ -182,6 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                       box.write("user_name", response["user"]["name"]);
                       box.write("user_email", response["user"]["email"]);
                       box.write("user_id", response["user"]["_id"]);
+
                       if (response["position"] == "AD") {
                         Get.offNamed("/admin_home");
                       } else if (response["position"] == "BA") {
