@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
       },
       body: jsonEncode(
         <String, dynamic>{
-          "email": "brown@gmail.com",
+          "email": "anu@gmail.com",
           "password": "1234",
         },
       ),

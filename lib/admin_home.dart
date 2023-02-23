@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 // import 'branch_admin.dart';
 import 'constants.dart';
-import 'get_storage.dart';
+
 
 class AdminHomePage extends StatefulWidget {
   const AdminHomePage({super.key});
@@ -32,7 +32,7 @@ Future createNewBranch({
 }) async {
   final response = await http.post(
     Uri.parse(
-      "http://10.0.2.2:3000/ecommerce/api/branch/",
+      "http://192.168.1.53000/ecommerce/api/branch/",
     ),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -66,7 +66,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
     final response = await http.get(
       Uri.parse(
         // "http://192.168.1.5:3000/ecommerce/api/branch/$id",
-        "http://10.0.2.2:3000/ecommerce/api/branch/63d0266857009af621fdff0e",
+        "http://192.168.1.5:3000/ecommerce/api/branch_admin/63d0266857009af621fdff0e",
       ),
     );
     if (response.statusCode == 200) {
